@@ -56,7 +56,27 @@
 </template>
 <script>
 export default {
-    layout: 'auth'
+    layout: 'auth',
+    data() {
+      return {
+        login: {
+          email:'',
+          password:''
+        }
+      }
+    },
+
+    methods: {
+      async useLogin() {
+        try {
+          // https://auth.nuxtjs.org/api/auth/#loginwithstrategyname-args
+          let response = await this.$auth.loginWith('local',{data: this.login})
+          this.$auth.setUser(response.data.data)
+        } catch (error) {
+          console.log(error)
+        }
+      }
+    },
 }
 </script>
 <style scoped>
