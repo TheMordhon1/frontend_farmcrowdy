@@ -7,7 +7,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'farmingcrowdfunding_frontend',
+    title: 'FarmCrowdy',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -43,10 +43,36 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
+    // https://auth.nuxtjs.org/guide/setup/
+    '@nuxtjs/auth-next',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    // https://www.postman.com/collections/ad0cc64a4f5f64c12049
+    baseURL: 'http://backer-backend.buildwithangga.id',
+  },
+
+  // https://auth.nuxtjs.org/schemes/local
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: { 
+            url: 'api/v1/sessions', 
+            method: 'post',
+            propertyName: 'data.token' ,
+        },
+          logout: false,
+          user: { 
+            url: '/api/v1/users/fetch',
+            method: 'get',
+            propertyName: 'data' 
+           }
+        }
+      }
+    }
+  },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
