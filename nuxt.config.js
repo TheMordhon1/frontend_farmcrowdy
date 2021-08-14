@@ -33,55 +33,50 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
-    // https://go.nuxtjs.dev/tailwindcss
+    // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
     '@nuxtjs/tailwindcss',
   ],
-
-  // Modules: https://go.nuxtjs.dev/config-modules
+  /*
+   ** Nuxt.js modules
+   */
   modules: [
-    // https://go.nuxtjs.dev/axios
+    // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    // https://go.nuxtjs.dev/pwa
-    '@nuxtjs/pwa',
-    // https://auth.nuxtjs.org/guide/setup/
     '@nuxtjs/auth',
   ],
-
-  // Axios module configuration: https://go.nuxtjs.dev/config-axios
+  /*
+   ** Axios module configuration
+   ** See https://axios.nuxtjs.org/options
+   */
   axios: {
-    // https://www.postman.com/collections/ad0cc64a4f5f64c12049
-    baseURL: 'http://backer-backend.buildwithangga.id',
+    baseURL: 'http://localhost:8080',
   },
-
-  // https://auth.nuxtjs.org/schemes/local
+  /*
+   ** Build configuration
+   ** See https://nuxtjs.org/api/configuration-build/
+   */
   auth: {
     strategies: {
       local: {
         endpoints: {
-          login: { 
-            url: 'api/v1/sessions', 
+          login: {
+            url: '/api/v1/sessions',
             method: 'post',
-            propertyName: 'data.token' ,
-        },
+            propertyName: 'data.token',
+          },
           logout: false,
-          user: { 
+          user: {
             url: '/api/v1/users/fetch',
             method: 'get',
-            propertyName: 'data' 
-           }
-        }
-      }
-    }
+            propertyName: 'data',
+          },
+        },
+        // tokenRequired: true,
+        // tokenType: 'bearer',
+        // globalToken: true,
+        // autoFetchUser: true,
+      },
+    },
   },
-
-  // PWA module configuration: https://go.nuxtjs.dev/pwa
-  pwa: {
-    manifest: {
-      lang: 'en'
-    }
-  },
-
-  // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {
-  }
+  build: {},
 }

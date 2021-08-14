@@ -24,44 +24,48 @@
             </ul>
           </div>
           <div class="w-1/4 text-right">
-          <nuxt-link to="/dashboard/create" class="bg-orange-button hover:bg-green-button text-white font-bold py-4 px-4 rounded inline-flex items-center"> + Buat Projek</nuxt-link>
+          <nuxt-link to="/dashboard/projects/create" class="bg-orange-button hover:bg-green-button text-white font-bold py-4 px-4 rounded inline-flex items-center"> + Buat Projek</nuxt-link>
           </div>
         </div>
         <hr />
         <div class="block mb-2">
-          <div class="w-full lg:max-w-full lg:flex mb-4" v-for="i in 5" :key="i">
+          <div class="w-full lg:max-w-full lg:flex mb-4" v-for="campaign in campaigns.data" :key="campaign.id">
             <div
-              class="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
-              style="
-                background-image: url('https://tailwindcss.com/img/card-left.jpg');
-              "
+              class="border h-48 lg:h-auto lg:w-64 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
+            :style="
+              'background-color: #bbb; background-position: center; background-image: url(\'' +
+              $axios.defaults.baseURL +
+              '/' +
+              campaign.image_url +
+              '\')'
+            "
             ></div>
-            <div
-              class="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-8 flex flex-col justify-between leading-normal"
+            <nuxt-link
+            :to="'/dashboard/projects/' + campaign.id"
+              class=" w-full border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-8 flex flex-col justify-between leading-normal"
             >
               <div class="mb-8">
                 <div class="text-gray-900 font-bold text-xl mb-1">
-                  Cari Uang Buat Gunpla
+                  {{campaign.name}}
                 </div>
                 <p class="text-sm text-gray-600 flex items-center mb-2">
-                  Rp. 200.000.000 &middot; 80%
+                  Rp.  {{ new Intl.NumberFormat().format(campaign.goal_amount) }}
+                &middot;
+                {{ (campaign.current_amount / campaign.goal_amount) * 100 }}%
                 </p>
                 <p class="text-gray-700 text-base">
-                  With N-key rollover (NKRO on wired mode only) you can register
-                  as many keys as you can press at once without missing out
-                  characters. It allows to use all the same media keys as
-                  conventional macOS.
+                  {{ campaign.short_description }}
                 </p>
               </div>
               <div class="flex items-center">
                 <nuxt-link
-                  :to="'/dashboard/projects/' + i"
+                  :to="'/dashboard/projects/' + campaign.id"
                   class="bg-green-button text-white py-2 px-4 rounded"
                 >
                   Detail
                 </nuxt-link>
               </div>
-            </div>
+            </nuxt-link>
           </div>
         </div>
       </section>
@@ -72,7 +76,11 @@
 </template>
 <script>
 export default {
-    
+      middleware: 'auth',
+      async asyncData({ $axios, app}) {
+        const campaigns = await $axios.$get('/api/v1/campaigns?user_id=' + app.$auth.user.id)
+      return {campaigns}
+      }
 }
 </script>
 <style lang="">

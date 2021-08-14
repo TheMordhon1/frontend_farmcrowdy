@@ -1,3 +1,4 @@
+
 <template lang="">
     <div class="h-screen flex justify-center items-center">
         <div
@@ -17,6 +18,7 @@
                   type="text"
                   class="auth-form focus:outline-none focus:bg-purple-hover focus:shadow-outline focus:border-purple-hover-stroke focus:text-gray-100"
                   placeholder="ex: Ardi Saputra"
+                  v-model="register.name"
                 />
               </div>
             </div>
@@ -29,6 +31,7 @@
                   type="text"
                   class="auth-form focus:outline-none focus:bg-purple-hover focus:shadow-outline focus:border-purple-hover-stroke focus:text-gray-100"
                   placeholder="ex: Pengusaha"
+                  v-model="register.occupation"
                 />
               </div>
             </div>
@@ -41,6 +44,7 @@
                   type="email"
                   class="auth-form focus:outline-none focus:bg-purple-hover focus:shadow-outline focus:border-purple-hover-stroke focus:text-gray-100"
                   placeholder="ex: ardisapt@gmail.com"
+                  v-model="register.email"
                 />
               </div>
             </div>
@@ -53,13 +57,15 @@
                   type="password"
                   class="auth-form focus:outline-none focus:bg-purple-hover focus:shadow-outline focus:border-purple-hover-stroke focus:text-gray-100"
                   placeholder="Masukan Password Anda"
+                  v-model="register.password"
+                  @keyup.enter="userRegister"
                 />
               </div>
             </div>
             <div class="mb-6">
               <div class="mb-4">
                 <button
-                  @click="$router.push({ path: '/upload' })"
+                  @click="userRegister"
                   class="block w-full bg-orange-button hover:bg-green-button text-white font-semibold px-6 py-4 text-lg rounded-full"
                 >
                   Lanjutkan
@@ -79,7 +85,31 @@
 </template>
 <script>
 export default {
-    layout: 'auth'
+    layout: 'auth',
+    data() {
+      return {
+        register: {
+          name:'',
+          email:'',
+          occupation:'',
+          password:'',
+        }
+      }
+    },
+    methods: {
+      async userRegister() {
+      try {
+        let response = await this.$axios.post('/api/v1/users', this.register)
+        console.log(response.data.data.token)
+        this.$auth
+          .setUserToken(response.data.data.token)
+          .then(() => this.$router.push({ path: '/upload' }))
+      } catch (err) {
+        console.log(err)
+      }
+    },
+    },
+
 }
 </script>
 <style scoped>

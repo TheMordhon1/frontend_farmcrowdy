@@ -83,7 +83,6 @@ body {
 
 .card-project {
   transition: all 0.3s ease 0s, opacity 0.5s cubic-bezier(0.5, 0, 0, 1) 1ms;
-  max-height: 485px;
   overflow: hidden;
 }
 .card-project .button-cta {
@@ -141,6 +140,7 @@ footer {
 .item-thumbnail:hover img {
   opacity: 0.3;
 }
+
 
 .auth-page {
   background-color: #3b41e3;

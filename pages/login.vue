@@ -9,41 +9,42 @@
               Masuk ke Akun Anda
             </h2>
             <div class="mb-6">
-              <div class="mb-4">
-                <label class="font-normal text-lg text-white block mb-3"
-                  >Alamat Email</label
-                >
-                <input
-                  type="email"
-                  class="auth-form focus:outline-none focus:bg-purple-hover focus:shadow-outline focus:border-purple-hover-stroke focus:text-gray-100"
-                  placeholder="Write your email address here"
-                  value="udahmakandon@gmail.com"
-                />
-              </div>
-            </div>
-            <div class="mb-6">
-              <div class="mb-4">
-                <label class="font-normal text-lg text-white block mb-3"
-                  >Password</label
-                >
-                <input
-                  type="password"
-                  class="auth-form focus:outline-none focus:bg-purple-hover focus:shadow-outline focus:border-purple-hover-stroke focus:text-gray-100"
-                  placeholder="Write your password here"
-                  value="nasigorenglimaribbu"
-                />
-              </div>
-            </div>
-            <div class="mb-6">
-              <div class="mb-4">
-                <button
-                  @click="$router.push({ path: '/' })"
-                  class="block w-full bg-orange-button hover:bg-green-button text-white font-semibold px-6 py-4 text-lg rounded-full"
-                >
-                  Log In
-                </button>
-              </div>
-            </div>
+          <div class="mb-4">
+            <label class="font-normal text-lg text-white block mb-3"
+              >Alamat Email</label
+            >
+            <input
+              type="email"
+              v-model="login.email"
+              class="auth-form focus:outline-none focus:bg-purple-hover focus:shadow-outline focus:border-purple-hover-stroke focus:text-gray-100"
+              placeholder="Masukan alamat email"
+            />
+          </div>
+        </div>
+        <div class="mb-6">
+          <div class="mb-4">
+            <label class="font-normal text-lg text-white block mb-3"
+              >Password</label
+            >
+            <input
+              @keyup.enter="userLogin"
+              type="password"
+              v-model="login.password"
+              class="auth-form focus:outline-none focus:bg-purple-hover focus:shadow-outline focus:border-purple-hover-stroke focus:text-gray-100"
+              placeholder="Password"
+            />
+          </div>
+        </div>
+        <div class="mb-6">
+          <div class="mb-4">
+            <button
+              @click="userLogin"
+              class="block w-full bg-orange-button hover:bg-green-button text-white font-semibold px-6 py-4 text-lg rounded-full"
+            >
+              Login
+            </button>
+          </div>
+        </div>
             <div class="text-center">
               <p class="text-white text-md">
                 Belum punya akun ?
@@ -55,34 +56,37 @@
       </div>
 </template>
 <script>
-export default {
-    layout: 'auth',
-    data() {
-      return {
-        login: {
-          email:'',
-          password:''
-        }
-      }
-    },
+  // https://auth.nuxtjs.org/api/auth/#loginwithstrategyname-args
+  // Scheme link : https://auth.nuxtjs.org/schemes/local/#usage
 
-    methods: {
-      async useLogin() {
-        try {
-          // https://auth.nuxtjs.org/api/auth/#loginwithstrategyname-args
-          let response = await this.$auth.loginWith('local',{data: this.login})
-          this.$auth.setUser(response.data.data)
-        } catch (error) {
-          console.log(error)
-        }
+export default {
+  layout: 'auth',
+  data() {
+    return {
+      login: {
+        email: '',
+        password: '',
+      },
+    }
+  },
+  methods: {
+    async userLogin() {
+      try {
+        let response = await this.$auth.loginWith('local', { data: this.login })
+        this.$auth.setUser(response.data.data)
+        console.log(response)
+      } catch (err) {
+        console.log(err)
       }
     },
+  },
 }
 </script>
-<style scoped>
-    .auth-background {
-        background-image: url("/sign-in-background.jpg");
-        background-position: center;
-        background-size: cover;
-      }
+
+<style lang="scss" scoped>
+.auth-background {
+  background-image: url('/sign-in-background.jpg');
+  background-position: center;
+  background-size: cover;
+}
 </style>
