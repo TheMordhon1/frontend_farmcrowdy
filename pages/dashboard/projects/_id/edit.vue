@@ -16,18 +16,26 @@
           <div class="w-3/4 mr-6">
             <h3 class="text-2xl text-gray-900 mb-4 capitalize">edit projek "{{campaign.data.name}}"</h3>
           </div>
-          <div class="success" v-if="savingSuccessful"> 
-              Berhasil di ubah 
-          </div>
         
-          <div class="w-1/4 text-right">
-            <button
-              @click="save"
-              class="bg-green-button hover:bg-green-button text-white font-bold px-4 py-1 rounded inline-flex items-center"
-              v-if="!savingSuccessful"
-            >
-              Ubah
-            </button>
+          <div class="w-1/4 flex gap-2 tem text-right justify-end">
+            <nuxt-link
+                :to="{
+                name: 'dashboard-projects-id',
+                params: { id: campaign.data.id },
+              }"
+                class="bg-orange-button hover:bg-orange-button text-white font-bold px-4 py-1 rounded inline-flex items-center opacity-50 hover:opacity-100"
+                
+              >
+                Kembali
+              </nuxt-link>
+              <button
+                @click="save"
+                class="bg-green-button hover:bg-green-button text-white font-bold px-4 py-1 rounded inline-flex items-center"
+                
+              >
+                Ubah
+              </button>
+            
           </div>
         </div>
         <div class="block mb-2">

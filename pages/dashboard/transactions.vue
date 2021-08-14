@@ -50,8 +50,9 @@
                 <p class="text-sm text-gray-600 flex items-center mb-2">
                   Rp.
                 {{ new Intl.NumberFormat().format(transaction.amount) }}
-                <br> {{ transaction.created_at }} <br>
+                <br> {{  new Date(transaction.created_at) | dateFormat('DD/MM/YYYY, h:m a') }} <br>
                 {{ transaction.status }}
+                
                 </p>
               </div>
             </div>
@@ -64,12 +65,16 @@
     </div>
 </template>
 <script>
+import Vue from 'vue';
+import VueFilterDateFormat from 'vue-filter-date-format';
+
+Vue.use(VueFilterDateFormat);
 export default {
       middleware: 'auth',
       async asyncData({ $axios, app}) {
         const transactions = await $axios.$get('/api/v1/transactions')
       return {transactions}
-      }
+      },
 }
 </script>
 <style lang="">

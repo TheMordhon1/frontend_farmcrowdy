@@ -59,7 +59,7 @@
                 <p class="font-bold flex items-center mb-1 mt-4 capitalize text-md mb-2">
                   total biaya projek
                 </p>
-                <p class="text-4xl text-gray-700 text-base">{{ new Intl.NumberFormat().format(campaign.data.goal_amount) }}</p>
+                <p class="text-4xl text-gray-700 text-base">Rp.{{ new Intl.NumberFormat().format(campaign.data.goal_amount) }}</p>
               </div>
             </div>
           </div>
@@ -109,7 +109,7 @@
                 <p class="text-sm text-gray-600 flex items-center mb-2">
                   Rp.
                 {{ new Intl.NumberFormat().format(transaction.amount) }}
-                <br> {{ transaction.created_at }}
+                <br>{{  new Date(transaction.created_at) | dateFormat('DD/MM/YYYY, h:m a') }}
                 </p>
               </div>
             </div>
@@ -122,6 +122,12 @@
     </div>
 </template>
 <script>
+
+import Vue from 'vue';
+import VueFilterDateFormat from 'vue-filter-date-format';
+
+Vue.use(VueFilterDateFormat);
+
 export default {
     middleware:'auth',
     async asyncData({$axios, params}) {
@@ -138,6 +144,7 @@ export default {
     },
 
     methods: {
+
     selectFile() {
       this.selectedFiles = this.$refs.file.files
     },
@@ -172,7 +179,10 @@ export default {
         console.log(err)
       }
     },
+  
   },
+
+
      
 }
 
