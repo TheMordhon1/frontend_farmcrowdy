@@ -1,7 +1,10 @@
 <template>
   <div class="landing-page">
-   <Hero/>
-   <Fitur/>
+    <section class="dashboard-header pt-5">
+        <div class="container mx-auto relative">
+          <Navbar/>
+        </div>
+      </section>
     <section class="container mx-auto pt-24" id="project">
       <div class="flex justify-between items-center">
         <div class="w-auto">
@@ -11,11 +14,7 @@
             Memerlukan Bantuan
           </h2>
         </div>
-        <div class="w-auto mt-5">
-          <nuxt-link class="text-gray-900 hover:underline text-md font-medium" to="/allproject"
-            >Lihat Semua</nuxt-link
-          >
-        </div>
+      
       </div>
       <div class="grid grid-cols-3 gap-4 mt-3">
         <div
@@ -109,7 +108,6 @@
         </div>
       </div>
     </section>
-    <Story/>
     <div class="cta-clip -mt-20"></div>
     <CallToAction />
     <Footer />

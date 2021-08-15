@@ -168,9 +168,10 @@
           <div class="flex progress-info mb-6">
             <div class="text-2xl">
               {{
-                (campaign.data.current_amount / campaign.data.goal_amount) *
+                parseFloat(campaign.data.current_amount / campaign.data.goal_amount).toFixed(2) *
                 100
               }}%
+              
             </div>
             <div class="ml-auto font-semibold text-2xl">
               Rp {{ new Intl.NumberFormat().format(campaign.data.goal_amount) }}

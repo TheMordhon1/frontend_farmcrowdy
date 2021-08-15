@@ -1,5 +1,6 @@
 
 <template lang="">
+    
     <div class="h-screen flex justify-center items-center">
         <div
           class="hidden md:block lg:w-1/3 bg-white h-full auth-background rounded-tr-lg rounded-br-lg"
@@ -9,7 +10,7 @@
             <h2 class="font-normal mb-6 text-3xl text-white">
               Buat Akun
             </h2>
-            <div class="mb-6">
+            <div class="mb-4">
               <div class="mb-4">
                 <label class="font-normal text-lg text-white block mb-3"
                   >Nama Lengkap</label
@@ -22,7 +23,7 @@
                 />
               </div>
             </div>
-            <div class="mb-6">
+            <div class="mb-4">
               <div class="mb-4">
                 <label class="font-normal text-lg text-white block mb-3"
                   >Pekerjaan</label
@@ -35,7 +36,7 @@
                 />
               </div>
             </div>
-            <div class="mb-6">
+            <div class="mb-4">
               <div class="mb-4">
                 <label class="font-normal text-lg text-white block mb-3"
                   >Alamat Email</label
@@ -62,7 +63,7 @@
                 />
               </div>
             </div>
-            <div class="mb-6">
+            <div class="mb-4">
               <div class="mb-4">
                 <button
                   @click="userRegister"

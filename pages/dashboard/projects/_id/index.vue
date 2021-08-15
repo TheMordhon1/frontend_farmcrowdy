@@ -109,7 +109,7 @@
                 <p class="text-sm text-gray-600 flex items-center mb-2">
                   Rp.
                 {{ new Intl.NumberFormat().format(transaction.amount) }}
-                <br>{{  new Date(transaction.created_at) | dateFormat('DD/MM/YYYY, h:m a') }}
+                <br>{{  new Date(transaction.created_at) | dateFormat('DD/MM/YYYY, hh:mm a') }}
                 </p>
               </div>
             </div>

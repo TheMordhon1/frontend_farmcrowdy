@@ -49,9 +49,11 @@
                   {{campaign.name}}
                 </div>
                 <p class="text-sm text-gray-600 flex items-center mb-2">
+                  {{ parseFloat(campaign.current_amount / campaign.goal_amount).toFixed(2) * 100 }}% /
                   Rp.  {{ new Intl.NumberFormat().format(campaign.goal_amount) }}
                 &middot;
-                {{ (campaign.current_amount / campaign.goal_amount) * 100 }}%
+                terakhir di ubah pada {{  new Date(campaign.updated_at) | dateFormat('DD/MM/YYYY, hh:mm a') }}
+                
                 </p>
                 <p class="text-gray-700 text-base">
                   {{ campaign.short_description }}
@@ -75,6 +77,10 @@
     </div>
 </template>
 <script>
+import Vue from 'vue';
+import VueFilterDateFormat from 'vue-filter-date-format';
+
+Vue.use(VueFilterDateFormat);
 export default {
       middleware: 'auth',
       async asyncData({ $axios, app}) {
