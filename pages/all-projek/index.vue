@@ -16,18 +16,18 @@
         </div>
       
       </div>
-      <div class="grid grid-cols-3 gap-4 mt-3">
+      <div class="grid grid-cols-3 gap-4 mt-3" id="card-projek">
         <div
-          v-for="campaign in campaigns.data"
+          v-for="campaign in projek.data"
           :key="campaign.id"
-          class="card-project w-full py-8 px-5 border border-gray-500 rounded-20"
+          class="card-project w-full py-8 px-5 border"
         >
           <div class="item flex flex-col">
             <figure class="item-image">
               <img
                 :src="$axios.defaults.baseURL + '/' + campaign.image_url"
                 alt=""
-                class="rounded-20"
+                class=""
               />
             </figure>
             <div class="item-meta">
@@ -82,7 +82,7 @@
             <button
               @click="
                 $router.push({
-                  name: 'projects-id',
+                  name: 'projek-id',
                   params: { id: campaign.id },
                 })
               "
@@ -98,12 +98,12 @@
                 px-6
                 py-2
                 text-lg
-                rounded-full
+                rounded-md
               "
             >
               Bantu Projek Ini
             </button>
-            <p class="mt-2"><span class="font-light text-gray-900"> terakhir di update pada </span>{{  new Date(campaign.updated_at) | dateFormat('DD/MM/YYYY, hh:mm a') }}</p>
+            <p class="mt-2 "><span class="font-light text-gray-900"> terakhir di update pada </span>{{  new Date(campaign.updated_at) | dateFormat('DD/MM/YYYY, hh:mm a') }}</p>
           </div>
         </div>
       </div>
@@ -121,10 +121,52 @@ import Story from '~/components/Story.vue';
 
 Vue.use(VueFilterDateFormat);
 export default {
+ 
   components: { Story },
   async asyncData({ $axios }) {
-    const campaigns = await $axios.$get('/api/v1/campaigns')
-    return { campaigns }
+    const projek = await $axios.$get('/api/v1/projek')
+    return { projek }
   },
+
+  el: '#project',
+  data: {
+    loading: false,
+    nextItem: 1,
+    items: []
+  },
+  mounted () {
+
+    // Detect when scrolled to bottom.
+    const listElm = document.querySelector('#card-projek');
+    listElm.addEventListener('scroll', e => {
+      if(listElm.scrollTop + listElm.clientHeight >= listElm.scrollHeight) {
+        this.loadMore();
+      }
+    });
+
+    // Initially load some items.
+    this.loadMore();
+
+  },
+  methods: {
+    loadMore () {
+      
+      /** This is only for this demo, you could 
+        * replace the following with code to hit 
+        * an endpoint to pull in more data. **/
+      this.loading = true;
+      setTimeout(e => {
+        for (var i = 0; i < 3; i++) {
+          this.items.push('campaign ' + this.nextItem++);
+        }
+        this.loading = false;
+      }, 200);
+      /**************************************/
+      
+    }
+  }
 }
+
+
+
 </script>

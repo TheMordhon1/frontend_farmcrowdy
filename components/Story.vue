@@ -14,11 +14,11 @@
         </div>
         <div class="w-8/12 mt-16">
           <h2 class="text-xl text-gray-900 font-light">
-            “Funding at Bucker is very easy and comfortable. <br />
-            Just need to find an idea, click and already funding.”
+            “FarmCrowdy adalah suatu terobosan bagi dunia pertanian di Indonesia. <br> FarmCrowdy akan memainkan peranan penting dalam melengkapi, memberdayakan, dan menyiapkan para petani kita dalam menyambut tantangan dan kesempatan yang akan muncul dalam Revolusi Industri Keempat.
+          ”
           </h2>
           <div class="testimonial-info mt-8">
-            <div class="name text-xl font-semibold">Shopie Nicole</div>
+            <div class="name text-xl font-semibold">Siti Nur Aminah</div>
             <div class="title text-xl font-light text-gray-400">
               Project Manager
             </div>

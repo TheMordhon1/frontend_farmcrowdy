@@ -19,7 +19,7 @@
           <div class="w-1/4 text-right">
             <nuxt-link
               :to="{
-                name: 'dashboard-projects-id-edit',
+                name: 'dashboard-projek-id-edit',
                 params: {id: campaign.data.id},
               }"
               class="bg-green-button hover:bg-green-button text-white font-bold px-4 py-1 rounded inline-flex items-center"
@@ -46,7 +46,7 @@
                 <p class="font-bold flex items-center mt-3 capitalize text-md mb-2">
                   deskripsi projek
                 </p>
-                <p class="text-gray-700 text-base">
+                <p class="text-gray-700 text-base whitespace-pre-line">
                   {{campaign.data.description}}
                 </p>
               
@@ -131,8 +131,8 @@ Vue.use(VueFilterDateFormat);
 export default {
     middleware:'auth',
     async asyncData({$axios, params}) {
-      const campaign = await $axios.$get('/api/v1/campaigns/' + params.id)
-      const transactions = await $axios.$get('/api/v1/campaigns/' + params.id + '/transactions')
+      const campaign = await $axios.$get('/api/v1/projek/' + params.id)
+      const transactions = await $axios.$get('/api/v1/projek/' + params.id + '/transaksi')
 
       return {campaign, transactions}
     },
@@ -150,7 +150,7 @@ export default {
     },
     async load() {
       const campaign = await this.$axios.$get(
-        '/api/v1/campaigns/' + this.$route.params.id
+        '/api/v1/projek/' + this.$route.params.id
       )
       this.campaign = campaign
     },
@@ -163,7 +163,7 @@ export default {
 
       try {
         let response = await this.$axios.post(
-          '/api/v1/campaign-images',
+          '/api/v1/projek-images',
           formData,
           {
             headers: {

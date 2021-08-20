@@ -33,9 +33,9 @@
       <hr />
       <div
         class="block mb-2"
-        v-for="transaction in transactions.data"
+        v-for="transaction in transaksi.data"
         :key="transaction.id"
-      >
+        >
         <div class="w-full lg:max-w-full lg:flex mb-4">
           <div
             class="
@@ -74,6 +74,7 @@
               <div class="text-gray-900 font-bold text-xl mb-1">
                 {{ transaction.campaign.name }}
               </div>
+              
               <p class="text-sm text-gray-600 flex items-center mb-2">
                 Rp.
                 {{ new Intl.NumberFormat().format(transaction.amount) }}
@@ -83,7 +84,10 @@
                     | dateFormat('DD/MM/YYYY, hh:mm a')
                 }}
                 <br />
-                {{ transaction.status }}
+                <div>
+                  <span v-if="transaction.status == 'pending'" class="text-orange-button capitalize"> {{ transaction.status }} </span>
+                  <span v-else="transaction.status == 'paid'" class="text-green-button capitalize"> {{ transaction.status }} </span>
+                </div>
               </p>
             </div>
           </div>
@@ -102,10 +106,12 @@ import VueFilterDateFormat from 'vue-filter-date-format'
 Vue.use(VueFilterDateFormat)
 export default {
   middleware: 'auth',
-  async asyncData({ $axios, app }) {
-    const transactions = await $axios.$get('/api/v1/transactions')
-    return { transactions }
+  async asyncData({ $axios }) {
+    
+    const transaksi = await $axios.$get('/api/v1/transaksi')
+    return { transaksi}
   },
+
 }
 </script>
 <style lang=""></style>

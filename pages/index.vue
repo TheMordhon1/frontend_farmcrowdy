@@ -12,30 +12,30 @@
           </h2>
         </div>
         <div class="w-auto mt-5">
-          <nuxt-link class="text-gray-900 hover:underline text-md font-medium" to="/allproject"
+          <nuxt-link class="text-gray-900 hover:underline text-md font-medium" to="/all-projek"
             >Lihat Semua</nuxt-link
           >
         </div>
       </div>
-      <div class="grid grid-cols-3 gap-4 mt-3">
+      <div class="grid grid-cols-4 mt-3 gap-y-10 gap-x-6">
         <div
-          v-for="campaign in campaigns.data"
+          v-for="campaign in projek.data"
           :key="campaign.id"
-          class="card-project w-full py-8 px-5 border border-gray-500 rounded-20"
+          class="card-project border rounded-6 p-4"
         >
           <div class="item flex flex-col">
-            <figure class="item-image">
-              <img
+            <figure class="item-image relative">
+              <img width="200" height="150"
                 :src="$axios.defaults.baseURL + '/' + campaign.image_url"
                 alt=""
-                class="rounded-20"
+                class=" object-contain w-full h-full"
               />
             </figure>
             <div class="item-meta">
-              <h4 class="text-xl font-medium text-gray-900 mt-5">
+              <h4 class="text-md font-medium text-gray-900 mt-5">
                 {{ campaign.name }}
               </h4>
-              <p class="text-md font-light text-gray-900 h-12">
+              <p class="text-sm font-light text-gray-900 h-12">
                 {{ campaign.short_description }}
               </p>
               <div class="relative pt-4 progress-bar">
@@ -83,7 +83,7 @@
             <button
               @click="
                 $router.push({
-                  name: 'projects-id',
+                  name: 'projek-id',
                   params: { id: campaign.id },
                 })
               "
@@ -99,12 +99,12 @@
                 px-6
                 py-2
                 text-lg
-                rounded-full
+                
               "
             >
               Bantu Projek Ini
             </button>
-            <p class="mt-2"><span class="font-light text-gray-900"> terakhir di update pada </span>{{  new Date(campaign.updated_at) | dateFormat('DD/MM/YYYY, hh:mm a') }}</p>
+            <p class="mt-2 text-sm"><span class="font-light text-gray-900 text-sm">Di update pada </span>{{  new Date(campaign.updated_at) | dateFormat('DD-MM-YYYY, hh:mm a') }}</p>
           </div>
         </div>
       </div>
@@ -125,8 +125,8 @@ Vue.use(VueFilterDateFormat);
 export default {
   components: { Story },
   async asyncData({ $axios }) {
-    const campaigns = await $axios.$get('/api/v1/campaigns')
-    return { campaigns }
+    const projek = await $axios.$get('/api/v1/projek')
+    return { projek }
   },
 }
 </script>

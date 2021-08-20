@@ -90,7 +90,7 @@ body {
   overflow: hidden;
 }
 .card-project .button-cta {
-  opacity: 0;
+  opacity: 1;
   transition: all 300ms ease;
 }
 .card-project:hover {
@@ -100,14 +100,14 @@ body {
   opacity: 1;
   transition: all 300ms ease;
 }
-.card-project:hover .progress-bar,
+/* .card-project:hover .progress-bar,
 .card-project:hover .progress-info {
   opacity: 0;
   height: 0px;
   margin: 0px;
   padding: 0px;
   transition: all 300ms ease;
-}
+} */
 
 footer {
   z-index: inherit;

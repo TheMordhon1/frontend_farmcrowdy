@@ -14,15 +14,28 @@
         </div>
         <div class="flex justify-between items-center">
           <div class="w-3/4 mr-6">
-            <h3 class="text-2xl text-gray-900 mb-4">Buat projek baru</h3>
+            <h3 class="text-2xl text-gray-900 mb-4 capitalize">edit projek "{{campaign.data.name}}"</h3>
           </div>
-          <div class="w-1/4 text-right">
-            <button
-              @click="save"
-              class="bg-green-button hover:bg-green-button text-white font-bold px-4 py-1 rounded inline-flex items-center"
-            >
-              Simpan
-            </button>
+        
+          <div class="w-1/4 flex gap-2 tem text-right justify-end">
+            <nuxt-link
+                :to="{
+                name: 'dashboard-projek-id',
+                params: { id: campaign.data.id },
+              }"
+                class="bg-orange-button hover:bg-orange-button text-white font-bold px-4 py-1 rounded inline-flex items-center opacity-50 hover:opacity-100"
+                
+              >
+                Kembali
+              </nuxt-link>
+              <button
+                @click="save"
+                class="bg-green-button hover:bg-green-button text-white font-bold px-4 py-1 rounded inline-flex items-center"
+                
+              >
+                Ubah
+              </button>
+            
           </div>
         </div>
         <div class="block mb-2">
@@ -42,7 +55,7 @@
                       class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                       type="text"
                       placeholder="ex: Projek Porang Pak Dudi"
-                      v-model="campaign.name"
+                      v-model="campaign.data.name"
                     />
                   </div>
                   <div class="w-full md:w-1/2 px-3">
@@ -55,7 +68,7 @@
                       class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                       type="number"
                       placeholder="ex: 60000000"
-                      v-model.number="campaign.goal_amount"
+                      v-model.number="campaign.data.goal_amount"
                     />
                   </div>
                   <div class="w-full px-3">
@@ -68,7 +81,7 @@
                       class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                       type="text"
                       placeholder="Deskripsi singkat mengenai projectmu"
-                      v-model="campaign.short_description"
+                      v-model="campaign.data.short_description"
                     />
                   </div>
                   <div class="w-full px-3">
@@ -81,7 +94,7 @@
                       class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                       type="text"
                       placeholder="*jika lebih dari satu pisahkan dengan tanda koma (,)"
-                      v-model="campaign.perks"
+                      v-model="campaign.data.perks"
                     />
                   </div>
                   <div class="w-full px-3">
@@ -91,10 +104,10 @@
                       Deskripsi Projek
                     </label>
                     <textarea rows="14"
-                      class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                      class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 whitespace-pre-line"
                       type="text"
                       placeholder="Isi deskripsi projekmu dengan jelas dan detail"
-                      v-model="campaign.description"
+                      v-model="campaign.data.description"
                     ></textarea>
                   </div>
                 </div>
@@ -109,35 +122,38 @@
     </div>
 </template>
 <script>
+import Vue from 'vue';
 export default {
-  middleware:'auth',
-  
-    data() {
-      return {
-        campaign: {
-          name:'',
-          short_description:'',
-          description:'',
-          goal_amount:'',
-          perks:'',
-        }
+  middleware: 'auth',
+  async asyncData({ $axios, params }) {
+    const campaign = await $axios.$get('/api/v1/projek/' + params.id)
+    return { campaign }
+  },
+  methods: {
+    
+    async save() {
+      try {
+        var savingSuccessful = false
+        let response = await this.$axios.$put(
+          '/api/v1/projek/' + this.$route.params.id,
+          {
+            name: this.campaign.data.name,
+            short_description: this.campaign.data.short_description,
+            description: this.campaign.data.description,
+            goal_amount: this.campaign.data.goal_amount,
+            perks: this.campaign.data.perks.join(),
+          }
+        )
+        console.log(response, savingSuccessful)
+      } catch (err) {
+        console.log(err)
       }
     },
+    changeImage(url) {
+      this.default_image = url
+    },
+  },
 
-    methods: {
-      async save() {
-        try {
-          let response = await this.$axios.$post('/api/v1/campaigns', this.campaign)
-          this.$router.push({
-            name : 'dashboard-projects-id',
-            params:{id:response.data.id}
-          })
-          console.log(response);
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    },
 }
 </script>
 <style lang="">

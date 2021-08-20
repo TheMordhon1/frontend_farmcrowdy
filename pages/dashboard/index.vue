@@ -16,7 +16,7 @@
               <li class="mr-6">
                 <nuxt-link
                   class="text-gray-500 hover:text-gray-800"
-                  to="/dashboard/transactions"
+                  to="/dashboard/transaksi"
                 >
                   Riwayat Transaksi
                 </nuxt-link>
@@ -24,12 +24,12 @@
             </ul>
           </div>
           <div class="w-1/4 text-right">
-          <nuxt-link to="/dashboard/projects/create" class="bg-orange-button hover:bg-green-button text-white font-bold py-4 px-4 rounded inline-flex items-center"> + Buat Projek</nuxt-link>
+          <nuxt-link to="/dashboard/projek/create" class="bg-orange-button hover:bg-green-button text-white font-bold py-4 px-4 rounded inline-flex items-center"> + Buat Projek</nuxt-link>
           </div>
         </div>
         <hr />
         <div class="block mb-2">
-          <div class="w-full lg:max-w-full lg:flex mb-4" v-for="campaign in campaigns.data" :key="campaign.id">
+          <div class="w-full lg:max-w-full lg:flex mb-4" v-for="campaign in projek.data" :key="campaign.id">
             <div
               class="border h-48 lg:h-auto lg:w-64 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
             :style="
@@ -41,7 +41,7 @@
             "
             ></div>
             <nuxt-link
-            :to="'/dashboard/projects/' + campaign.id"
+            :to="'/dashboard/projek/' + campaign.id"
               class=" w-full border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-8 flex flex-col justify-between leading-normal"
             >
               <div class="mb-8">
@@ -61,7 +61,7 @@
               </div>
               <div class="flex items-center">
                 <nuxt-link
-                  :to="'/dashboard/projects/' + campaign.id"
+                  :to="'/dashboard/projek/' + campaign.id"
                   class="bg-green-button text-white py-2 px-4 rounded"
                 >
                   Detail
@@ -84,8 +84,8 @@ Vue.use(VueFilterDateFormat);
 export default {
       middleware: 'auth',
       async asyncData({ $axios, app}) {
-        const campaigns = await $axios.$get('/api/v1/campaigns?user_id=' + app.$auth.user.id)
-      return {campaigns}
+        const projek = await $axios.$get('/api/v1/projek?user_id=' + app.$auth.user.id)
+      return {projek}
       }
 }
 </script>

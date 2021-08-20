@@ -16,7 +16,7 @@
               mewujudkan mimpi mereka
             </p>
             <nuxt-link
-              to='/allproject'
+              to='/all-projek'
               class="
                 block
                 bg-orange-button
